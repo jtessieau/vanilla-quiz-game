@@ -1,4 +1,4 @@
-const questions = {
+const openTriviaResponse = {
     response_code: 0,
     results: [
         {
@@ -108,4 +108,4 @@ const questions = {
     ],
 };
 
-export default questions;
+export default openTriviaResponse;
