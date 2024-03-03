@@ -15,11 +15,17 @@ const counter = document.querySelector('#counter');
 
 let currentQuestion;
 let questionsArray;
+let score;
 
 function initGame() {
+    score = 0;
     questionsArray = copyQuestionsArray(openTriviaResponse);
     currentQuestion = selectRandomQuestion(questionsArray);
-    update();
+    if (currentQuestion !== null) {
+        update();
+    } else {
+        alert('A problem occured retriving questions.');
+    }
 }
 
 function update() {
@@ -53,54 +59,52 @@ function displayNextQuestion() {
 function displayAnswers() {
     answersContainer.innerHTML = '';
 
-    const possibleAnswers = [
-        ...currentQuestion.incorrect_answers,
-        currentQuestion.correct_answer,
-    ];
-    let answersArray = [];
+    let possibleAnswers;
 
     if (currentQuestion.type === 'multiple') {
-        answersArray = shuffle(possibleAnswers);
+        possibleAnswers = shuffle([
+            ...currentQuestion.incorrect_answers,
+            currentQuestion.correct_answer,
+        ]);
     } else {
-        answersArray = ['False', 'True'];
+        possibleAnswers = ['False', 'True'];
     }
 
-    Object.values(answersArray).forEach((value) => {
+    Object.values(possibleAnswers).forEach((value) => {
         const btn = document.createElement('button');
+
         btn.setAttribute('type', 'button');
         btn.setAttribute('data-answer', value);
         btn.innerHTML = value;
         btn.onclick = (event) => checkAnswer(event);
+
         answersContainer.appendChild(btn);
     });
 }
 
 function checkAnswer(event) {
     const answer = event.target.getAttribute('data-answer');
+
     if (answer === currentQuestion.correct_answer) {
         event.target.style.backgroundColor = 'green';
-        event.target.onclick = null;
-        event.target.setAttribute('data-guess', 'right');
-
-        nextButton.disabled = false;
-        nextButton.onclick = displayNextQuestion;
-
-        const buttons = answersContainer.children;
-
-        Object.values(buttons).forEach((element) => {
-            if (
-                element.tagName === 'BUTTON' &&
-                element.getAttribute('data-guess') !== 'right'
-            ) {
-                element.disabled = true;
-            }
-        });
-        currentQuestion.answered = true;
-        questionsArray = removeAnsweredQuestion(questionsArray);
+        score += 1;
     } else {
         event.target.style.backgroundColor = 'red';
-        event.target.onclick = null;
     }
+
+    const buttons = answersContainer.children;
+
+    Object.values(buttons).forEach((element) => {
+        if (element.tagName === 'BUTTON') {
+            element.onclick = null;
+        }
+    });
+
+    currentQuestion.answered = true;
+    questionsArray = removeAnsweredQuestion(questionsArray);
+
+    nextButton.disabled = false;
+    nextButton.onclick = displayNextQuestion;
 }
 
 function removeAnsweredQuestion(questions) {
