@@ -8,6 +8,7 @@
     "bracketSpacing": true,
     "arrowParens": "always",
     "jsxSingleQuote": true,
-    "semi": true
+    "semi": true,
+    "printWidth": 90
 
 }
