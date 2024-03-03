@@ -9,8 +9,9 @@ const difficultyText = document.querySelector('#difficulty');
 const questionText = document.querySelector('#question');
 const answersContainer = document.querySelector('#answersContainer');
 const resetButton = document.querySelector('#resetButton');
-resetButton.onclick = resetGame;
+resetButton.onclick = initGame;
 const nextButton = document.querySelector('#nextButton');
+const counter = document.querySelector('#counter');
 
 let currentQuestion;
 let questionsArray;
@@ -21,20 +22,22 @@ function initGame() {
     update();
 }
 
-function resetGame() {
-    questionsArray = copyQuestionsArray(openTriviaResponse);
-    currentQuestion = selectRandomQuestion(questionsArray);
-    update();
-}
-
 function update() {
     categoryText.innerHTML = currentQuestion.category;
     difficultyText.innerHTML = currentQuestion.difficulty;
     questionText.innerHTML = currentQuestion.question;
     displayAnswers();
+    displayCounter();
 }
 
-function nextQuestion() {
+function displayCounter() {
+    const totalQuestions = openTriviaResponse.results.length;
+    const current = totalQuestions - questionsArray.length + 1;
+
+    counter.innerText = `${current}/${totalQuestions}`;
+}
+
+function displayNextQuestion() {
     currentQuestion = selectRandomQuestion(questionsArray);
 
     nextButton.onclick = null;
@@ -80,7 +83,7 @@ function checkAnswer(event) {
         event.target.setAttribute('data-guess', 'right');
 
         nextButton.disabled = false;
-        nextButton.onclick = nextQuestion;
+        nextButton.onclick = displayNextQuestion;
 
         const buttons = answersContainer.children;
 
