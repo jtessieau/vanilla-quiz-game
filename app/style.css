@@ -1,0 +1,40 @@
+button {
+    padding: .5rem 1rem;
+    outline: none;
+    border: none;
+    margin: 1px;
+
+}
+
+#gameOverModal {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    background-color: rgba(0,0,0,0.8);
+}
+
+#gameOverContainer {
+    background-color: white;
+    padding: 5rem;
+    margin: 3rem;
+
+    border-radius: 1rem;
+}
+
+#gameOverContainer p {
+    margin-bottom: 1rem;
+}
+
+#score {
+    font-weight: bold;
+}
+
+#gameOverContainer button {
+    font-weight: bold;
+    background-color: crimson;
+    color: white;
+}
+

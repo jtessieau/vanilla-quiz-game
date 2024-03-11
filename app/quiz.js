@@ -13,6 +13,9 @@ resetButton.onclick = initGame;
 const nextButton = document.querySelector('#nextButton');
 const counter = document.querySelector('#counter');
 
+const gameOverModal = document.getElementById('gameOverModal');
+const scoreText = document.getElementById('score');
+
 let currentQuestion;
 let questionsArray;
 let score;
@@ -21,6 +24,7 @@ function initGame() {
     score = 0;
     questionsArray = copyQuestionsArray(openTriviaResponse);
     currentQuestion = selectRandomQuestion(questionsArray);
+    gameOverModal.style.display = 'none';
     if (currentQuestion !== null) {
         update();
     } else {
@@ -52,7 +56,7 @@ function displayNextQuestion() {
     if (currentQuestion !== null) {
         update();
     } else {
-        alert('No more questions! please reset the game.');
+        gameOver();
     }
 }
 
@@ -109,6 +113,11 @@ function checkAnswer(event) {
 
 function removeAnsweredQuestion(questions) {
     return questions.filter((question) => question.answered !== true);
+}
+
+function gameOver() {
+    gameOverModal.style.display = 'block';
+    scoreText.innerText = score;
 }
 
 initGame();

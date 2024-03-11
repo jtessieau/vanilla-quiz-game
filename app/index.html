@@ -3,6 +3,7 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link href="style.css" rel="stylesheet" type="text/css" />
         <title>Quiz</title>
     </head>
     <body>
@@ -17,9 +18,17 @@
             <div id="question">The question?</div>
             <div id="answersContainer">The answers...</div>
             <div id="controlContainer">
-                <button type="button" id="resetButton">Reset</button>
                 <button type="button" id="nextButton" disabled>Next question</button>
                 <span id="counter">counter</span>
+            </div>
+        </div>
+        <div id="gameOverModal">
+            <div id="gameOverContainer">
+                <h2>Quizz finish</h2>
+                <p ="scoreDisplay">
+                    You correctly answers <span id="score"></span> questions!
+                </p>
+                <button type="button" id="resetButton">Reset</button>
             </div>
         </div>
         <script type="module" src="quiz.js"></script>
