@@ -90,7 +90,7 @@ function checkAnswer(event) {
     const answer = event.target.getAttribute('data-answer');
 
     if (answer === currentQuestion.correct_answer) {
-        event.target.style.backgroundColor = 'green';
+        // event.target.style.backgroundColor = 'green';
         score += 1;
     } else {
         event.target.style.backgroundColor = 'red';
@@ -100,6 +100,9 @@ function checkAnswer(event) {
 
     Object.values(buttons).forEach((element) => {
         if (element.tagName === 'BUTTON') {
+            if (element.getAttribute('data-answer') === currentQuestion.correct_answer) {
+                element.style.backgroundColor = 'green';
+            }
             element.onclick = null;
         }
     });
